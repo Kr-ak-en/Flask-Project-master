@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 align="center">My profile</h1>
+
+<h4 align="center">Name</h4>
+    <div class="border border-secondary border-5 rounded-pill">
+        <p class="mx-2">{{current_user.name}}</p>
+    </div>
+    <p></p>
+
+<h4 align="center">Email</h4>
+    <div class="border border-secondary border-5 rounded-pill">
+        <p class="mx-2">{{current_user.email}}</p>
+    </div>
+    <p></p>
+
+<h4 align="center">About</h4>
+    <div class="border border-secondary border-5 rounded-pill">
+        <p class="mx-2">{{current_user.about}}</p>
+    </div>
+    <p></p>
+
+<h4 align="center">Created date</h4>
+    <div class="border border-secondary border-5 rounded-pill">
+        <p class="mx-2">{{current_user.created_date}}</p>
+    </div>
+    <p></p>
+
+<p>
+    <a class="btn btn-primary " href="/edition">Editing</a>
+    <a class="btn btn-danger" href="/logout">Sign out</a>
+</p>
+
+
+
+{% endblock %}

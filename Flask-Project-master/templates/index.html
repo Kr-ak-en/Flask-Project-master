@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Blog entries</h1>
+{% if current_user.is_authenticated %}
+    <a href="news" class="btn btn-primary">Add an item</a>
+{% endif %}
+
+{% for item in news%}
+    {% if (datetime.today() - item.created_date).days < 2 %}
+        <div class="col-md6 border rounded bg-success">
+
+    {% elif ((datetime.today() - item.created_date).days) == 2 and
+            (time - item.created_date.hour * 60 + item.created_date.minute) > 120 %}
+                <div class="col-md6 border rounded bg-secondary">
+
+    {% else %}
+        <div class="col-md6 border rounded bg-secondary">
+    {% endif %}
+
+            <h2>{{item.title}}</h2>
+            <div>
+                {{item.content}}
+            </div>
+            <div>
+                Author - {{item.user.name}}, Date - {{item.created_date}}
+                <div class="col-md6 border rounded">
+                    <h5>Comments</h5>
+                     {% for elem in comments %}
+                        {% if item.id == elem.new_id %}
+                            <div class="col-md6 border">
+                                <p><font color="blue">{{ elem.user }}, {{elem.created_date}}</font></p>
+                                <p>{{ elem.content }}</p>
+                            </div>
+                        {% endif %}
+                     {% endfor %}
+                </div>
+                {% if current_user.is_authenticated %}
+                <div>
+                    <a href="/comment/{{ item.id }}" class="btn btn-info">
+                        Make a comment
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% if current_user.is_authenticated and current_user == item.user %}
+            <div>
+                <a href="/news/{{ item.id }}" class="btn btn-warning">
+                    Edit
+                </a>
+                <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
+                    Delete
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        </div>
+        </div>
+{% endfor %}
+{% endblock %}
